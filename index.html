@@ -36,7 +36,7 @@
         <a href="#home" class="nav-link">Home</a>
         <a href="#services" class="nav-link">Services</a>
         <a href="#consultant" class="nav-link">About Us</a>
-        <a href="#calculator" class="nav-link">Quick Booking</a>
+        <a href="#calculator" class="nav-link">Instant Booking</a>
         <a href="#contact" class="nav-link">Contact</a>
       </nav>
 
@@ -252,7 +252,7 @@
                 <a href="tel:03132592940" class="social-icon"><i class="fas fa-phone"></i></a>
                 <a href="https://wa.me/923132592940" target="_blank" class="social-icon"><i
                     class="fab fa-whatsapp"></i></a>
-                <a href="mailto:linkmovers@gmail.com" class="social-icon"><i class="far fa-envelope"></i></a>
+                <a href="mailto:[EMAIL_ADDRESS]" class="social-icon"><i class="far fa-envelope"></i></a>
               </div>
             </div>
           </div>
@@ -444,8 +444,8 @@
           </div>
 
           <div class="contact-form-panel">
-            <h3>Send Us Email</h3>
-            <p>Our consultation experts will email or call you back in short time.</p>
+            <h3>Send Us a Message</h3>
+            <p>Our consultation experts will email or call you back inside 2 hours.</p>
 
             <form id="contactForm" class="contact-form">
               <div class="form-group">
@@ -516,7 +516,7 @@
 
     <div class="footer-bottom">
       <div class="container fb-container">
-        <p>&copy; 2026 Link Movers. All Rights Reserved. Powered by Saba S. Jassani</p>
+        <p>&copy; 2026 Link Movers. All Rights Reserved. Powered by Salman Jassani.</p>
         <div class="legal-links">
           <a href="#">Privacy Policy</a>
           <a href="#">Terms & Conditions</a>
@@ -525,7 +525,7 @@
     </div>
   </footer>
 
- <!-- Booking Confirmation Modal / Dialog -->
+  <!-- Booking Confirmation Modal / Dialog -->
   <div class="modal-overlay" id="confirmModal">
     <div class="modal-card">
       <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
@@ -535,12 +535,12 @@
         </div>
         <h2>Booking Request Logged!</h2>
         <p class="modal-desc">Thank you, <strong id="modalCustomerName">Customer</strong>! Your container allocation
-          request has been registered. Soon you will be contacted.</p>
+          estimate has been registered. Our representative will contact you to confirm.</p>
 
         <div class="receipt-box text-left">
-          <h4>Preview:</h4>
+          <h4>Booking Request Preview:</h4>
           <div class="receipt-row">
-            <span>Service:</span>
+            <span>Selected Service:</span>
             <strong id="recService">Up Country Movement</strong>
           </div>
           <div class="receipt-row">
@@ -572,6 +572,88 @@
     </div>
   </div>
 
+  <!-- Contact Submission / Client Selector Modal -->
+  <div class="modal-overlay" id="contactClientModal">
+    <div class="modal-card contact-modal-card">
+      <button class="modal-close" id="contactModalClose" aria-label="Close modal"><i class="fas fa-times"></i></button>
+      <div class="modal-body text-center">
+        <div class="client-modal-header">
+          <div class="client-icon-badge"><i class="fas fa-paper-plane"></i></div>
+          <h2>Choose Submission Client</h2>
+          <p class="modal-desc">Select how you would like to send your enquiry to <strong style="color:var(--primary);">Link Movers</strong>:</p>
+        </div>
+
+        <div class="client-preview-box text-left">
+          <div class="preview-row">
+            <span>Name:</span> <strong id="contactModalName">Customer</strong>
+          </div>
+          <div class="preview-row">
+            <span>Subject:</span> <strong id="contactModalSubject">Logistics Enquiry</strong>
+          </div>
+        </div>
+
+        <div class="client-selector-grid">
+          <a id="clientBtnMailto" href="#" class="client-option-btn default-mail">
+            <div class="client-opt-icon"><i class="fas fa-envelope"></i></div>
+            <div class="client-opt-info">
+              <strong>Default Mail App</strong>
+              <small>Apple Mail, Outlook Desktop, Mobile Mail</small>
+            </div>
+            <i class="fas fa-chevron-right arrow-icon"></i>
+          </a>
+
+          <a id="clientBtnGmail" href="#" target="_blank" rel="noopener noreferrer" class="client-option-btn gmail-mail">
+            <div class="client-opt-icon"><i class="fab fa-google"></i></div>
+            <div class="client-opt-info">
+              <strong>Gmail Web / App</strong>
+              <small>Open in Gmail Web or Mobile App</small>
+            </div>
+            <i class="fas fa-chevron-right arrow-icon"></i>
+          </a>
+
+          <a id="clientBtnOutlook" href="#" target="_blank" rel="noopener noreferrer" class="client-option-btn outlook-mail">
+            <div class="client-opt-icon"><i class="fab fa-microsoft"></i></div>
+            <div class="client-opt-info">
+              <strong>Outlook / Hotmail</strong>
+              <small>Open in Outlook Web or Mobile App</small>
+            </div>
+            <i class="fas fa-chevron-right arrow-icon"></i>
+          </a>
+
+          <a id="clientBtnYahoo" href="#" target="_blank" rel="noopener noreferrer" class="client-option-btn yahoo-mail">
+            <div class="client-opt-icon"><i class="fab fa-yahoo"></i></div>
+            <div class="client-opt-info">
+              <strong>Yahoo Mail</strong>
+              <small>Open in Yahoo Web or Mobile App</small>
+            </div>
+            <i class="fas fa-chevron-right arrow-icon"></i>
+          </a>
+
+          <a id="clientBtnWhatsapp" href="#" target="_blank" rel="noopener noreferrer" class="client-option-btn whatsapp-mail">
+            <div class="client-opt-icon"><i class="fab fa-whatsapp"></i></div>
+            <div class="client-opt-info">
+              <strong>WhatsApp Direct</strong>
+              <small>Send instantly via WhatsApp chat</small>
+            </div>
+            <i class="fas fa-chevron-right arrow-icon"></i>
+          </a>
+
+          <a id="clientBtnSms" href="#" class="client-option-btn sms-mail mobile-only-flex">
+            <div class="client-opt-icon"><i class="fas fa-comment-dots"></i></div>
+            <div class="client-opt-info">
+              <strong>SMS Message</strong>
+              <small>Direct Mobile Text Message</small>
+            </div>
+            <i class="fas fa-chevron-right arrow-icon"></i>
+          </a>
+        </div>
+
+        <div class="modal-actions" style="margin-top: 20px;">
+          <button id="contactModalDoneBtn" class="btn btn-outline btn-block">Close & Reset Form</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
   <!-- Scroll to Top Button -->

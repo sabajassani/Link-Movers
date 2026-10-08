@@ -328,6 +328,7 @@ document.addEventListener('DOMContentLoaded', () => {
       `- *Service Type:* ${serviceTitle}\n` +
       `- *Route:* ${currentMovementType === 'local' ? `${originCity} Local` : `${originCity} to${destCity}`}\n` +
       `- *Cargo Weight:* ${weight} Tons\n` +
+      `- *Estimated Cost:* PKR ${quote.totalCost.toLocaleString()}\n\n` +
       `Please confirm the container allocation and truck dispatch. Thanks!`;
 
     const encodedMsg = encodeURIComponent(textMsg);
@@ -376,6 +377,18 @@ document.addEventListener('DOMContentLoaded', () => {
   // 6. CONTACT FORM SUBMISSION WITH CLIENT SELECTOR
   // ==========================================
   const contactForm = document.getElementById('contactForm');
+  const contactClientModal = document.getElementById('contactClientModal');
+  const contactModalClose = document.getElementById('contactModalClose');
+  const contactModalDoneBtn = document.getElementById('contactModalDoneBtn');
+  const contactModalName = document.getElementById('contactModalName');
+  const contactModalSubject = document.getElementById('contactModalSubject');
+
+  const clientBtnMailto = document.getElementById('clientBtnMailto');
+  const clientBtnGmail = document.getElementById('clientBtnGmail');
+  const clientBtnOutlook = document.getElementById('clientBtnOutlook');
+  const clientBtnYahoo = document.getElementById('clientBtnYahoo');
+  const clientBtnWhatsapp = document.getElementById('clientBtnWhatsapp');
+  const clientBtnSms = document.getElementById('clientBtnSms');
 
   if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
@@ -399,59 +412,67 @@ document.addEventListener('DOMContentLoaded', () => {
       const encSubject = encodeURIComponent(emailSubject);
       const encBody = encodeURIComponent(emailBody);
 
-      // Dynamic webmail endpoints & default mailto URL
-      const emailUrls = {
-        default: `mailto:${targetEmail}?subject=${encSubject}&body=${encBody}`,
-        gmail: `https://mail.google.com/mail/?view=cm&fs=1&to=${targetEmail}&su=${encSubject}&body=${encBody}`,
-        outlook: `https://outlook.live.com/mail/0/deeplink/compose?to=${targetEmail}&subject=${encSubject}&body=${encBody}`,
-        yahoo: `https://compose.mail.yahoo.com/?to=${targetEmail}&subject=${encSubject}&body=${encBody}`
-      };
+      // Webmail & Mailto URLs
+      const mailtoUrl = `mailto:${targetEmail}?subject=${encSubject}&body=${encBody}`;
+      const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${targetEmail}&su=${encSubject}&body=${encBody}`;
+      const outlookUrl = `https://outlook.live.com/mail/0/deeplink/compose?to=${targetEmail}&subject=${encSubject}&body=${encBody}`;
+      const yahooUrl = `https://compose.mail.yahoo.com/?to=${targetEmail}&subject=${encSubject}&body=${encBody}`;
 
-      // Ask the user which client they want to use
-      openEmailSelector(emailUrls);
+      // WhatsApp formatted message
+      const waMessage = `Hello Link Movers,\n\nI would like to submit a logistics enquiry:\n` +
+        `- *Name:* ${name}\n` +
+        `- *Email:* ${userEmail}\n` +
+        `- *Subject:* ${subjectText}\n\n` +
+        `*Message/Specifications:*\n${message}`;
+      const waUrl = `https://wa.me/923132592940?text=${encodeURIComponent(waMessage)}`;
+
+      // SMS formatted message
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+      const smsUrl = `sms:+923132592940${isIOS ? '&' : '?'}body=${encodeURIComponent(waMessage)}`;
+
+      // Update Modal UI elements
+      if (contactModalName) contactModalName.innerText = name;
+      if (contactModalSubject) contactModalSubject.innerText = subjectText;
+
+      // Assign link attributes
+      if (clientBtnMailto) clientBtnMailto.setAttribute('href', mailtoUrl);
+      if (clientBtnGmail) clientBtnGmail.setAttribute('href', gmailUrl);
+      if (clientBtnOutlook) clientBtnOutlook.setAttribute('href', outlookUrl);
+      if (clientBtnYahoo) clientBtnYahoo.setAttribute('href', yahooUrl);
+      if (clientBtnWhatsapp) clientBtnWhatsapp.setAttribute('href', waUrl);
+      if (clientBtnSms) clientBtnSms.setAttribute('href', smsUrl);
+
+      // Show Modal
+      if (contactClientModal) contactClientModal.classList.add('active');
     });
   }
 
-  function openEmailSelector(urls) {
-    // Simple prompt choice (or replace with a custom HTML modal)
-    const choice = prompt(
-      "How would you like to send your email?\n\n" +
-      "1. Default Mail App (Apple Mail, Outlook Desktop, Mobile)\n" +
-      "2. Gmail (Web)\n" +
-      "3. Outlook / Hotmail (Web)\n" +
-      "4. Yahoo Mail (Web)\n\n" +
-      "Enter a number (1-4):"
-    );
-
-    switch (choice) {
-      case '1':
-        window.location.href = urls.default;
-        break;
-      case '2':
-        window.open(urls.gmail, '_blank');
-        break;
-      case '3':
-        window.open(urls.outlook, '_blank');
-        break;
-      case '4':
-        window.open(urls.yahoo, '_blank');
-        break;
-      default:
-        if (choice !== null) alert("Invalid choice. Please try again.");
-        break;
-    }
-
-
-    // Construct mailto link
-    const mailtoUrl = `mailto:${targetEmail}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-
-    // Trigger user's mail client with pre-filled content
-    window.location.href = mailtoUrl;
-
-    // Provide clear feedback
-    alert(`Thank you, ${name}! Your enquiry details have been pre-filled. Opening your email app to send the message to ${targetEmail}.`);
-    contactForm.reset();
+  // Modal closing handlers
+  const closeContactModal = () => {
+    if (contactClientModal) contactClientModal.classList.remove('active');
+    if (contactForm) contactForm.reset();
   };
+
+  if (contactModalClose) contactModalClose.addEventListener('click', closeContactModal);
+  if (contactModalDoneBtn) contactModalDoneBtn.addEventListener('click', closeContactModal);
+  if (contactClientModal) {
+    contactClientModal.addEventListener('click', (e) => {
+      if (e.target === contactClientModal) {
+        closeContactModal();
+      }
+    });
+  }
+
+  const clientOptionBtns = [clientBtnMailto, clientBtnGmail, clientBtnOutlook, clientBtnYahoo, clientBtnWhatsapp, clientBtnSms];
+  clientOptionBtns.forEach(btn => {
+    if (btn) {
+      btn.addEventListener('click', () => {
+        setTimeout(() => {
+          closeContactModal();
+        }, 500);
+      });
+    }
+  });
 
   // ==========================================
   // 7. SCROLL TO TOP BUTTON
